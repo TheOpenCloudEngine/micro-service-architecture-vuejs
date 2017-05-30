@@ -16,8 +16,9 @@ Vue.component('object-grid', {
         columns: Array,
         filterKey: String,
         java: String,
-        columnChanger: Object
-
+        columnChanger: Object,
+        fullFledged: Boolean,
+        online: Boolean,
     },
 
     created: function () {
@@ -27,6 +28,23 @@ Vue.component('object-grid', {
         xhr.onload = function () {
             var metadata = JSON.parse(xhr.responseText)
             self.columns = metadata.fieldDescriptors;
+
+            for(var i=0; i<self.columns.length; i++){
+                var item = self.columns[i];
+
+                if(item.attributes && item.attributes['hidden']){
+                    self.columns.splice(i, 1);
+                    i--;
+                }else if(item.className == "long" || item.className == "java.lang.Long" || item.className == "java.lang.Integer"){
+                    item.type = "number";
+                }else if(item.className == "java.util.Date" || item.className == "java.util.Calendar"){
+                    item.type = "date";
+                }else if(item.className.indexOf('[L') == 0 && item.className.indexOf(";") > 1){
+                    item.component = "object-grid"
+                    item.elemClassName = item.className.substring(2, item.className.length - 1);
+
+                }
+            }
 
             if(self.columnChanger){
                 self.columnChanger(self.columns);
@@ -46,6 +64,8 @@ Vue.component('object-grid', {
     methods: {
         loadData: function(){
             ///loads the data firstly
+
+            if(!this.online) return;
 
             var pathElements = this.java.split(".");
             var path = pathElements[pathElements.length-1].toLowerCase();
@@ -85,6 +105,13 @@ Vue.component('object-grid', {
             if(event == "saved"){
                 this.addRow(data);
             }
+        },
+        addObject: function(aRow){
+            if(!this.data) this.data = [];
+
+            this.data.push(aRow);
+           // this.$forceUpdate();
+
         }
     }
 })
