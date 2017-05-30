@@ -27,14 +27,21 @@ Vue.component('object-form', {
             var metadata = JSON.parse(xhr.responseText)
             self.columns = metadata.fieldDescriptors;
 
-            self.columns.forEach(function(item){
-                if(item.className == "long" || item.className == "java.lang.Long" || item.className == "java.lang.Integer"){
+            for(var i=0; i<self.columns.length; i++){
+                var item = self.columns[i];
+
+                if(item.attributes && item.attributes['hidden']){
+                    self.columns.splice(i, 1);
+                    i--;
+                }else if(item.className == "long" || item.className == "java.lang.Long" || item.className == "java.lang.Integer"){
                     item.type = "number";
                 }else if(item.className == "java.util.Date" || item.className == "java.util.Calendar"){
                     item.type = "date";
+                }else if(item.className.indexOf('[L') == 0 && item.className.indexOf(";") > 1){
+                    item.component = "object-grid"
                 }
+            }
 
-            });
         }
         xhr.send();
 

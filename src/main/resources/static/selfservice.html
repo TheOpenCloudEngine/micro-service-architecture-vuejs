@@ -27,41 +27,11 @@
 
 
 <div id="app">
-    <form id="search">
-        Search <input name="query" v-model="searchQuery">
-    </form>
-    <object-grid ref="grid"
-            :java="java"
-            :filter-key="searchQuery"
-            :column-changer="columnChanger"
-    >
-    </object-grid>
-
-    <md-button class="md-fab md-fab-bottom-right" id="fab" @click.native="$refs['dialog'].open()">
-        <md-icon>add</md-icon>
-    </md-button>
-
-    <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
-        <md-dialog-title>제품 마스터 생성</md-dialog-title>
-
-        <md-dialog-content>
-            <object-form ref="object-form"
-                    :java="java"
-                    :data = "data"
-                    :event-listeners = "['grid']"
-            >
-            </object-form>
-        </md-dialog-content>
-
-        <md-dialog-actions>
-            <md-button class="md-primary" @click.native="$refs['object-form'].submit_(); $refs['dialog'].close()">저장</md-button>
-            <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
-        </md-dialog-actions>
-    </md-dialog>
-
+        <object-form ref="object-form"
+                :java="java"
+                :data = "data"
+        ></object-form>
 </div>
-
-
 
 
 
@@ -70,18 +40,10 @@
     var app = new Vue({
         el: '#app',
         data: {
-            java: "com.moornmo.ltms.Product",
+            java: "org.uengine.uml.model.ClassDefinition",
             data:
-                { curRestNum: 1,  optiNum: 1},
-            columnChanger: function(columns){
-                columns.push({
-                    displayName: '코드',
-                    name: 'code',
-                    computed: function(item){
-                        return item.prodNumber + "-" + item.prodName + "-" + item.prodStandard;
-                    }
-                })
-            }
+                { name: 'com.moornmo.ltms.Product'},
+
         }
     })
 
