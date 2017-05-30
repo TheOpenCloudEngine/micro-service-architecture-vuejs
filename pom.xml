@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.springframework</groupId>
-    <artifactId>gs-accessing-data-rest</artifactId>
+    <groupId>com.moornmo</groupId>
+    <artifactId>ltms</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -45,6 +45,18 @@
             <groupId>org.uengine.metaworks</groupId>
             <artifactId>metaworks-multitenancy</artifactId>
             <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>uengine-resource-manager</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>uengine-persistence-couchbase</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
