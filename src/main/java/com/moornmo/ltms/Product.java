@@ -1,6 +1,7 @@
 package com.moornmo.ltms;
 
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 
 import javax.persistence.*;
@@ -69,6 +70,7 @@ public class Product {
     String prodStandard4;
     @Face(displayName = "규격4")
     @Order(60)
+    @Hidden
         public String getProdStandard4() {
             return prodStandard4;
         }
