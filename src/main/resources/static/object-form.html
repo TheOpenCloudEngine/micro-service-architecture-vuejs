@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@0.7.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
+
+
+</head>
+<body>
+
+<script>
+
+    Vue.use(VueMaterial)
+
+</script>
+
+
+<script type="text/x-template" id="object-form-template">
+    <form novalidate @submit.stop.prevent="submit" v-once>
+        <md-input-container v-for="key in columns">
+            <label>{{ key.displayName }}</label>
+            <md-input v-model="propdata[key.name]"></md-input>
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" v-on:click.native="submit_">Submit</md-button>
+    </form>
+
+
+</script>
+
+<!-- demo root element -->
+<div id="demo-1">
+    <object-form
+            :java="className_" :propdata="data_">
+    </object-form>
+</div>
+
+
+<script>
+
+
+
+
+    Vue.component('object-form', {
+        template: '#object-form-template',
+        props: {
+            data: Array,
+            columns: Array,
+            java: String,
+            propdata: Object
+
+        },
+
+        created: function () {
+            var xhr = new XMLHttpRequest()
+            var self = this
+            xhr.open('GET', "http://localhost:8080/metadata?className=" + this.java, false);
+            xhr.onload = function () {
+                var metadata = JSON.parse(xhr.responseText)
+                self.columns = metadata.fieldDescriptors;
+            }
+            xhr.send();
+
+        },
+
+        data: function () {
+
+
+            var sortOrders = {}
+
+            if(this.columns) {
+                this.columns.forEach(function (key) {
+                    sortOrders[key] = 1
+                });
+            }
+
+            return {
+                sortKey: '',
+                sortOrders: sortOrders
+            }
+        },
+
+        methods:{
+            submit_: function(){
+
+                console.log(this.propdata);
+
+                var xhr = new XMLHttpRequest()
+                var self = this
+                xhr.open('POST', "http://localhost:8080/people", false);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                }
+                xhr.send(JSON.stringify(this.propdata));
+            }
+
+        }
+
+
+
+    })
+
+    // bootstrap the demo
+    var demo1 = new Vue({
+        el: '#demo-1',
+        data: {
+            className_: 'hello.Person',
+            data_:
+                { firstName: 'Chuck', lastName:'Norris', power: Infinity },
+
+        }
+    })
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<md-table v-once>
+    <md-table-header>
+        <md-table-row>
+            <md-table-head v-for="key in columns"
+                           md-sort-by="key">
+                {{ key.displayName | capitalize }}
+            </md-table-head>
+        </md-table-row>
+    </md-table-header>
+    <md-table-body>
+        <md-table-row v-for="entry in filteredData">
+            <md-table-cell v-for="key in columns">
+                {{entry[key.name]}}
+            </md-table-cell>
+        </md-table-row>
+    </md-table-body>
+</md-table>
