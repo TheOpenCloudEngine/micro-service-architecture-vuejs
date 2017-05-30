@@ -1,12 +1,9 @@
 <form novalidate @submit.stop.prevent="submit" v-once>
-    <div v-for="key in columns">
-        <md-input-container v-if="!key.component">
-            <label>{{ key.displayName }}</label>
-            <md-input v-model="data[key.name]" :type="key.type"></md-input>
-        </md-input-container>
+    <md-input-container v-for="key in columns">
+        <label>{{ key.displayName }}</label>
+        <md-input v-if="!key.component" v-model="data[key.name]" :type="key.type"></md-input>
+        <component v-if="key.component" :is="key.component" :data="data[key.name]" :java="key.elemClassName" :full-fledged="true"></component>
+    </md-input-container>
 
-        <component v-if="key.component" :is="key.component" v-model="data[key.name]" :java="key.className"></component>
-    </div>
-
-    <md-button class="md-raised md-primary" v-on:click.native="submit_">Submit</md-button>
+    <md-button v-if="online" class="md-raised md-primary" v-on:click.native="submit_">Submit</md-button>
 </form>

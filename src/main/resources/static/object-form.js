@@ -15,8 +15,8 @@ Vue.component('object-form', {
         columns: Array,
         java: String,
         data: Object,
-        eventListeners: Array
-
+        eventListeners: Array,
+        online: Boolean
     },
 
     created: function () {
@@ -39,6 +39,8 @@ Vue.component('object-form', {
                     item.type = "date";
                 }else if(item.className.indexOf('[L') == 0 && item.className.indexOf(";") > 1){
                     item.component = "object-grid"
+                    item.elemClassName = item.className.substring(2, item.className.length - 1);
+
                 }
             }
 
