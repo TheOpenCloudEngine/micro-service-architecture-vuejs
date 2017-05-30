@@ -30,6 +30,7 @@
         <object-form ref="object-form"
                 :java="java"
                 :data = "data"
+                :online="true"
         ></object-form>
 </div>
 
@@ -37,14 +38,26 @@
 
 <script>
 
+
+    var classDefinition;{
+
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product", false);
+        xhr.onload = function () {
+            var jsonData = JSON.parse(xhr.responseText)
+            classDefinition = jsonData;
+        }
+        xhr.send();
+    }
+
     var app = new Vue({
         el: '#app',
         data: {
             java: "org.uengine.uml.model.ClassDefinition",
             data:
-                { name: 'com.moornmo.ltms.Product'},
+                classDefinition,
 
-        }
+        },
     })
 
 
