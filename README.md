@@ -6,8 +6,10 @@
 mvn spring-boot:run
 ```
 
-### Frondend server
+### Front-end server
 ```
 cd src/main/resources/static
 npm run dev
 ```
+
+Go to wiki for documentation:  https://github.com/TheOpenCloudEngine/micro-service-architecture-vuejs/wiki
