@@ -9,6 +9,7 @@ mvn spring-boot:run
 ### Front-end server
 ```
 cd src/main/resources/static
+npm install
 npm run dev
 ```
 
