@@ -62,6 +62,8 @@ Vue.component('object-form', {
             xhr.open('POST', "http://localhost:8080/" + path, false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onload = function () {
+                console.log(xhr);
+
             }
             xhr.send(JSON.stringify(this.data));
 
