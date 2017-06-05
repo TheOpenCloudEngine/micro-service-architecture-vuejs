@@ -6,6 +6,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -73,6 +76,47 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
     }
 
     @Override
+    public <S extends E> S save(S entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    public Page<E> findAll(Pageable pageable) {
+        Page<E> page = super.findAll(pageable);
+
+        return page;
+    }
+
+    @Override
+    public List<E> findAll(Iterable<PK> pks) {
+        return super.findAll(pks);
+    }
+
+    @Override
+    public List<E> findAll(Sort sort) {
+        return super.findAll(sort);
+    }
+
+    @Override
+    public E findOne(Specification<E> spec) {
+        return super.findOne(spec);
+    }
+
+    @Override
+    public List<E> findAll(Specification<E> spec) {
+        return super.findAll(spec);
+    }
+
+    @Override
+    public Page<E> findAll(Specification<E> spec, Pageable pageable) {
+        return super.findAll(spec, pageable);
+    }
+
+    @Override
+    public List<E> findAll(Specification<E> spec, Sort sort) {
+        return super.findAll(spec, sort);
+    }
+
     public EntityManager getEntityManager() {
         return this.entityManager;
     }

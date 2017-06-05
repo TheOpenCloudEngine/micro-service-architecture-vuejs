@@ -7,6 +7,7 @@ import org.metaworks.rest.MetaworksRestService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -22,6 +23,7 @@ import java.util.List;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackageClasses = {MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
+@EnableJpaRepositories(repositoryBaseClass = CustomGenericRepositoryImpl.class)
 public class WebConfig extends WebMvcConfigurerAdapter {
 //    @Override
 //    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

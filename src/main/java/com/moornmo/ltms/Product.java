@@ -18,6 +18,8 @@ public class Product {
     long pNo;
 
     String prodNumber;
+    private boolean deleted;
+
     @Face(displayName = "품번(제품코드)")
     @Order(10)
         public String getProdNumber() {
@@ -99,4 +101,11 @@ public class Product {
         }
 
 
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
 }

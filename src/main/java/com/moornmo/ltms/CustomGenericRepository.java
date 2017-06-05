@@ -1,3 +1,5 @@
+package com.moornmo.ltms;
+
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
@@ -11,6 +13,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface CustomGenericRepository<E extends Product, PK extends Serializable> extends
         JpaRepository<E, PK>, JpaSpecificationExecutor<E> {
 
-    EntityManager getEntityManager();
+  //  EntityManager getEntityManager();
 
 }
