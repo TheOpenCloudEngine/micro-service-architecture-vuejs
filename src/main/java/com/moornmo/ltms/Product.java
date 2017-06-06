@@ -1,5 +1,6 @@
 package com.moornmo.ltms;
 
+import com.moornmo.framework.BeforeSave;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.metaworks.annotation.Face;
@@ -7,6 +8,7 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by uengine on 2017. 5. 29..
@@ -15,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "TB_PROD")
 @Multitenant
 @TenantDiscriminatorColumn(name = "TENANTID", contextProperty = "tenant-id")
-public class Product {
+public class Product implements BeforeSave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -123,4 +125,23 @@ public class Product {
             this.tenantId = tenantId;
         }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    //@JoinColumn(name="pNo")
+    List<Property> props;
+        public List<Property> getProps() {
+            return props;
+        }
+        public void setProps(List<Property> props) {
+            this.props = props;
+        }
+
+
+    @Override //this will not be required if the CASCADE option operates properly.
+    public void beforeSave() {
+        if(getProps()!=null){
+            for(Property property : getProps()){
+                property.setProduct(this);
+            }
+        }
+    }
 }

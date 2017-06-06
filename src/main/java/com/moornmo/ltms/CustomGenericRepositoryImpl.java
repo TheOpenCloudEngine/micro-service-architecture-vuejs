@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.moornmo.framework.BeforeSave;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -104,13 +105,17 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
 
         getEntityManager().setProperty("tenant-id", "tenantA");
 
+        if(entity instanceof BeforeSave){
+            entity.beforeSave();
+        }
+
         return super.save(entity);
     }
 
     @Override
     public Page<E> findAll(Pageable pageable) {
 
-        getEntityManager().getProperties().put("eclipselink.tenant-id", "tenantA");
+        getEntityManager().setProperty("tenant-id", "tenantA");
 
         Page<E> page = super.findAll(pageable);
 
