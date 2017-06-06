@@ -15,7 +15,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long pNo;
+    Long pNo;
 
     String prodNumber;
     private boolean deleted;

@@ -11,7 +11,7 @@ public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long progId;
+    Long progId;
 
     String progType;
         public String getProgType() {

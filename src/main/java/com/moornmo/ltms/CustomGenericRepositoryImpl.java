@@ -75,6 +75,21 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
         };
     }
 
+
+    private Specification<E> isMyTenantData(final String tenantId) {
+        return new Specification<E>() {
+
+            @Override
+            public Predicate toPredicate(Root<E> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                final Predicate tenant = cb.equal(root.get("tenantID"), tenantId);
+                //final Predicate hidden = cb.isFalse(root.<Boolean> get("deleted"));
+                return tenant;//cb.and(id, hidden);
+            }
+
+        };
+    }
+
+
     @Override
     public <S extends E> S save(S entity) {
         return super.save(entity);
