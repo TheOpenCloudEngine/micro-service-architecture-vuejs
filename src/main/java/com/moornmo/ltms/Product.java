@@ -1,5 +1,9 @@
 package com.moornmo.ltms;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.moornmo.framework.AfterLoad;
 import com.moornmo.framework.BeforeSave;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
@@ -8,7 +12,10 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by uengine on 2017. 5. 29..
@@ -17,7 +24,7 @@ import java.util.List;
 @Table(name = "TB_PROD")
 @Multitenant
 @TenantDiscriminatorColumn(name = "TENANTID", contextProperty = "tenant-id")
-public class Product implements BeforeSave {
+public class Product implements BeforeSave, AfterLoad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -127,6 +134,7 @@ public class Product implements BeforeSave {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     //@JoinColumn(name="pNo")
+    //@JsonUnwrapped
     List<Property> props;
         public List<Property> getProps() {
             return props;
@@ -135,12 +143,52 @@ public class Product implements BeforeSave {
             this.props = props;
         }
 
+    @JsonUnwrapped
+    @Transient
+    Map<String, String> props_;
+        @JsonUnwrapped
+        @JsonAnyGetter
+        public Map<String, String> getProps_() {
+            return props_;
+        }
+        public void setProps_(Map<String, String> props_) {
+            this.props_ = props_;
+        }
+        @JsonAnySetter
+        public void addProps_(String key, String value) {
+            if(this.props_ == null)
+                this.props_ = new HashMap<String, String>();
+
+            this.props_.put(key, value);
+        }
+
 
     @Override //this will not be required if the CASCADE option operates properly.
     public void beforeSave() {
+
+        if(getProps_()!=null){
+            setProps(new ArrayList<Property>());
+
+            for(String key : getProps_().keySet()){
+                Property property = new Property();
+                property.setProduct(this); ///// this part is specific
+                property.setPropName(key);
+                property.setValue(getProps_().get(key));
+
+                getProps().add(property);
+
+            }
+        }
+
+    }
+
+    @Override
+    public void afterLoad() {
         if(getProps()!=null){
+            setProps_(new HashMap<String, String>());
+
             for(Property property : getProps()){
-                property.setProduct(this);
+                getProps_().put(property.getPropName(), property.getValue());
             }
         }
     }

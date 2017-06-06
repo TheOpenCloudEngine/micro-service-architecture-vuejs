@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.moornmo.framework.AfterLoad;
 import com.moornmo.framework.BeforeSave;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -118,6 +119,14 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
         getEntityManager().setProperty("tenant-id", "tenantA");
 
         Page<E> page = super.findAll(pageable);
+
+        for(E entity: page.getContent()){
+
+            if(entity instanceof AfterLoad) {
+                ((AfterLoad) entity).afterLoad();
+            }
+
+        }
 
         return page;
     }

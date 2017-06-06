@@ -22,7 +22,7 @@ Vue.component('object-form', {
     created: function () {
         var xhr = new XMLHttpRequest()
         var self = this
-        xhr.open('GET', "http://localhost:8080/metadata?className=" + this.java, false);
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
         xhr.onload = function () {
             var metadata = JSON.parse(xhr.responseText)
             self.columns = metadata.fieldDescriptors;
