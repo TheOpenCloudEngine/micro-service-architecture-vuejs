@@ -1,5 +1,7 @@
 package com.moornmo.ltms;
 
+import org.eclipse.persistence.annotations.Multitenant;
+import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
@@ -11,6 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TB_PROD")
+@Multitenant
+@TenantDiscriminatorColumn(name = "TENANTID", contextProperty = "tenant-id")
 public class Product {
 
     @Id
@@ -108,4 +112,15 @@ public class Product {
     public boolean isDeleted() {
         return deleted;
     }
+
+
+    @Column(name="TENANTID", insertable=false, updatable=false)
+    String tenantId;
+        public String getTenantId() {
+            return tenantId;
+        }
+        public void setTenantId(String tenantId) {
+            this.tenantId = tenantId;
+        }
+
 }

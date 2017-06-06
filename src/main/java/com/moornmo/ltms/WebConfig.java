@@ -6,6 +6,7 @@ import org.metaworks.multitenancy.CouchbaseMetadataService;
 import org.metaworks.multitenancy.MetadataService;
 import org.metaworks.rest.MetaworksRestService;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -102,8 +104,24 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public JpaProperties jpaProperties(){
 
         JpaProperties propertiesMap = new JpaProperties();
-        propertiesMap.getProperties().put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+        propertiesMap.getProperties().put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
 
         return propertiesMap;
     }
+
+
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(final EntityManagerFactoryBuilder builder) {
+//        LocalContainerEntityManagerFactoryBean ret = null;
+//        try {
+//            ret = builder
+//                    .dataSource(dataSource())
+//                    .packages(Product.class.getPackage().getName())
+//                    .persistenceUnit("YourPersistenceUnitName")
+//                    .properties(initJpaProperties()).build();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        return ret;
+//    }
 }

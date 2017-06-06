@@ -31,6 +31,10 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
         this.entityInformation = entityInformation;
+
+
+        getEntityManager().setProperty("tenant-id", "tenantA");
+
     }
 
     @Override
@@ -43,6 +47,11 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
 
     @Override
     public List<E> findAll() {
+
+
+        getEntityManager().setProperty("tenant-id", "tenantA");
+
+
         return super.findAll(this.isRemoved());
     }
 
@@ -92,11 +101,17 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
 
     @Override
     public <S extends E> S save(S entity) {
+
+        getEntityManager().setProperty("tenant-id", "tenantA");
+
         return super.save(entity);
     }
 
     @Override
     public Page<E> findAll(Pageable pageable) {
+
+        getEntityManager().getProperties().put("eclipselink.tenant-id", "tenantA");
+
         Page<E> page = super.findAll(pageable);
 
         return page;
@@ -139,5 +154,7 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
     protected JpaEntityInformation<E, ?> getEntityInformation() {
         return this.entityInformation;
     }
+
+
 
 }
