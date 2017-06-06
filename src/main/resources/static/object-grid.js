@@ -46,6 +46,10 @@ Vue.component('object-grid', {
                     item.component = "object-grid"
                     item.elemClassName = item.className.substring(2, item.className.length - 1);
 
+                }else if(item.collectionClass){
+                    item.component = "object-grid"
+                    item.elemClassName = item.collectionClass;
+
                 }
             }
 
@@ -65,18 +69,22 @@ Vue.component('object-grid', {
     created: function(){
 
 
-        var pathElements = this.java.split(".");
-        var path = pathElements[pathElements.length-1].toLowerCase();
-        var xhr = new XMLHttpRequest()
-        var self = this
+        if(this.online){
 
-        xhr.open('GET', "http://localhost:8080/" + path, false);
+            var pathElements = this.java.split(".");
+            var path = pathElements[pathElements.length-1].toLowerCase();
+            var xhr = new XMLHttpRequest()
+            var self = this
 
-        xhr.onload = function () {
-            var jsonData = JSON.parse(xhr.responseText)
-            self.rowData = jsonData._embedded[path];
+            xhr.open('GET', "http://localhost:8080/" + path, false);
+
+            xhr.onload = function () {
+                var jsonData = JSON.parse(xhr.responseText)
+                self.rowData = jsonData._embedded[path];
+            }
+            xhr.send();
+
         }
-        xhr.send();
 
     },
     computed: {
@@ -117,6 +125,8 @@ Vue.component('object-grid', {
             if(!this.rowData) this.rowData = [];
 
             this.rowData.push(aRow);
+
+            this.data = this.rowData;
 
         }
     }

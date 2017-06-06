@@ -41,6 +41,10 @@ Vue.component('object-form', {
                     item.component = "object-grid"
                     item.elemClassName = item.className.substring(2, item.className.length - 1);
 
+                }else if(item.collectionClass){
+                    item.component = "object-grid"
+                    item.elemClassName = item.collectionClass;
+
                 }
             }
 

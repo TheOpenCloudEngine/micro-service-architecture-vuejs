@@ -35,6 +35,7 @@
             :filter-key="searchQuery"
             :column-changer="columnChanger"
             :online = "true"
+            :data = "[]"
     >
     </object-grid>
 
@@ -70,7 +71,7 @@
             searchQuery: '',
             java: "com.moornmo.ltms.Product",
             data:
-                { curRestNum: 1,  optiNum: 1},
+                { curRestNum: 1,  optiNum: 1, props:[]},
             columnChanger: function(columns){
                 columns.push({
                     displayName: '코드',
