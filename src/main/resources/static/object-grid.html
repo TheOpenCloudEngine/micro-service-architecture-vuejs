@@ -1,20 +1,22 @@
 <div>
 
-    <table>
-        <tr>
-                <th v-for="key in columns"
+    <md-table>
+        <md-table-header>
+            <md-table-row>
+                <md-table-head v-for="key in columns"
                                :md-sort-by="key.name">
                     {{ key.displayName | capitalize }}
-                </th>
-        </tr>
-        <tbody>
-            <tr v-for="entry in filteredData">
-                <td v-for="key in columns">
+                </md-table-head>
+            </md-table-row>
+        </md-table-header>
+        <md-table-body>
+            <md-table-row v-for="entry in filteredData">
+                <md-table-cell v-for="key in columns">
                     {{ showValue(key, entry) }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </md-table-cell>
+            </md-table-row>
+        </md-table-body>
+    </md-table>
 
     <div v-if="fullFledged">
         <md-button class="md-primary" @click.native="$refs['dialog'].open()">추가</md-button>

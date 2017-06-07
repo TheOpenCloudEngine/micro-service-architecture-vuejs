@@ -1,5 +1,8 @@
 package com.moornmo.ltms;
 
+import com.moornmo.framework.ReferencePicker;
+import org.metaworks.annotation.Face;
+
 import javax.persistence.*;
 
 /**
@@ -12,6 +15,12 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long progId;
+        public Long getProgId() {
+            return progId;
+        }
+        public void setProgId(Long progId) {
+            this.progId = progId;
+        }
 
     String progType;
         public String getProgType() {
@@ -27,6 +36,18 @@ public class Progress {
         }
         public void setProgName(String progName) {
             this.progName = progName;
+        }
+
+
+    @JoinColumn(name = "prodId")
+   // @OneToOne(cascade = CascadeType.ALL)
+    Product product;
+    @Face(options = {"class", "vue-component"}, values = {"com.moornmo.ltms.Product", "reference-picker"})
+        public Product getProduct() {
+            return product;
+        }
+        public void setProduct(Product product) {
+            this.product = product;
         }
 
 

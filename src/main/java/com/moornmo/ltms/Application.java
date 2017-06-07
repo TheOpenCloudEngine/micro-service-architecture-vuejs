@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
@@ -55,15 +56,22 @@ public class Application extends JpaBaseConfiguration {
 
 	public static void main(String[] args) {
 
-		ProductRepository repository = SpringApplication.run(Application.class, args).getBean(ProductRepository.class);
+		ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
 
+		ProgressRepository progressRepository = applicationContext.getBean(ProgressRepository.class);
 
-		Product product = new Product();
-		product.setProdName("aaaa");
-		product.setProdNumber("1111");
-		repository.save(product);
+		//test logics
 
-		System.out.println(repository.findAll());
+//		Product product = new Product();
+//		product.setpNo(1252l);
+//
+//		Progress progress = new Progress();
+//		progress.setProduct(product);
+//		progress.setProgName("progress");
+//		progress.setProgType("type");
+//
+//		progressRepository.save(progress);
+
 	}
 
 }

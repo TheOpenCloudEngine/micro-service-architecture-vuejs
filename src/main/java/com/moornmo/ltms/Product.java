@@ -9,6 +9,7 @@ import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.Name;
 import org.metaworks.annotation.Order;
 
 import javax.persistence.*;
@@ -29,6 +30,15 @@ public class Product implements BeforeSave, AfterLoad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long pNo;
+    @Hidden
+    @org.metaworks.annotation.Id
+        public Long getpNo() {
+            return pNo;
+        }
+        public void setpNo(Long pNo) {
+            this.pNo = pNo;
+        }
+
 
     String prodNumber;
     private boolean deleted;
@@ -45,6 +55,7 @@ public class Product implements BeforeSave, AfterLoad {
     String prodName;
     @Face(displayName = "품명")
     @Order(20)
+    @Name
         public String getProdName() {
             return prodName;
         }
@@ -118,6 +129,7 @@ public class Product implements BeforeSave, AfterLoad {
         this.deleted = deleted;
     }
 
+    @Hidden
     public boolean isDeleted() {
         return deleted;
     }
@@ -125,6 +137,7 @@ public class Product implements BeforeSave, AfterLoad {
 
     @Column(name="TENANTID", insertable=false, updatable=false)
     String tenantId;
+    @Hidden
         public String getTenantId() {
             return tenantId;
         }
@@ -133,9 +146,8 @@ public class Product implements BeforeSave, AfterLoad {
         }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    //@JoinColumn(name="pNo")
-    //@JsonUnwrapped
     List<Property> props;
+        @Hidden
         public List<Property> getProps() {
             return props;
         }
@@ -143,11 +155,10 @@ public class Product implements BeforeSave, AfterLoad {
             this.props = props;
         }
 
-    @JsonUnwrapped
     @Transient
     Map<String, String> props_;
-        @JsonUnwrapped
         @JsonAnyGetter
+        @Hidden
         public Map<String, String> getProps_() {
             return props_;
         }

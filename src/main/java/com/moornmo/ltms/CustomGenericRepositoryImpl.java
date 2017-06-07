@@ -21,8 +21,8 @@ import java.io.Serializable;
 import java.util.List;
 
 
-@Transactional(readOnly = true)
-public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializable> extends
+@Transactional
+public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
         SimpleJpaRepository<E, PK> implements CustomGenericRepository<E, PK> {
 
     private final EntityManager entityManager;
@@ -44,7 +44,7 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
     public void delete(final E entity) {
         Assert.notNull(entity, "Entity object must not be null!");
        // entity.setChangeDate(Calendar.getInstance().getTime());
-        entity.setDeleted(true);
+        //entity.setDeleted(true);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class CustomGenericRepositoryImpl<E extends Product, PK extends Serializa
         getEntityManager().setProperty("tenant-id", "tenantA");
 
         if(entity instanceof BeforeSave){
-            entity.beforeSave();
+            ((BeforeSave)entity).beforeSave();
         }
 
         return super.save(entity);

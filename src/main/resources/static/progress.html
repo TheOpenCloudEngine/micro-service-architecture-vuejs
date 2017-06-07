@@ -22,6 +22,7 @@
 
 <script src="object-grid.js"></script>
 <script src="object-form.js"></script>
+<script src="reference-picker.js"></script>
 
 
 
@@ -43,7 +44,7 @@
     </md-button>
 
     <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
-        <md-dialog-title>제품 마스터 생성</md-dialog-title>
+        <md-dialog-title>진행(Progress) 등록 </md-dialog-title>
 
         <md-dialog-content>
             <object-form ref="object-form"
@@ -69,15 +70,18 @@
         data: {
             java: "com.moornmo.ltms.Progress",
             data:
-                { curRestNum: 1,  optiNum: 1},
+                { product: {}},
             columnChanger: function(columns){
-                columns.push({
-                    displayName: '코드',
-                    name: 'code',
+                columns[0] = ({
+                    displayName: '제품',
+                    name: 'product',
                     computed: function(item){
-                        return item.prodNumber + "-" + item.prodName + "-" + item.prodStandard;
+                        if(item.product)
+                            return item.product.prodName;
+                        else
+                            return "-제품선택전-"
                     }
-                })
+                });
             }
         }
     })
