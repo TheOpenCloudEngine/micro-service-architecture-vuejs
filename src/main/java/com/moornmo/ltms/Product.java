@@ -25,6 +25,7 @@ import java.util.Map;
 @Table(name = "TB_PROD")
 @Multitenant
 @TenantDiscriminatorColumn(name = "TENANTID", contextProperty = "tenant-id")
+@Face(displayName = "제품")
 public class Product implements BeforeSave, AfterLoad {
 
     @Id

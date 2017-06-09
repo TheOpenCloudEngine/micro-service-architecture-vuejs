@@ -27,9 +27,11 @@ Vue.component('object-grid', {
         var xhr = new XMLHttpRequest();
         var columns = [];
         var self = this;
+        var metadata;
+
         xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
         xhr.onload = function () {
-            var metadata = JSON.parse(xhr.responseText)
+            metadata = JSON.parse(xhr.responseText)
             columns = metadata.fieldDescriptors;
 
             for(var i=0; i<columns.length; i++){
@@ -49,7 +51,6 @@ Vue.component('object-grid', {
                 }else if(item.collectionClass){
                     item.component = "object-grid"
                     item.elemClassName = item.collectionClass;
-
                 }
             }
 
@@ -62,7 +63,8 @@ Vue.component('object-grid', {
 
         return {
             rowData: this.data,
-            columns: columns
+            columns: columns,
+            metadata: metadata,
         };
     },
 

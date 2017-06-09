@@ -1,22 +1,57 @@
 <div>
 
-    <md-table>
-        <md-table-header>
-            <md-table-row>
-                <md-table-head v-for="key in columns"
-                               :md-sort-by="key.name">
-                    {{ key.displayName | capitalize }}
-                </md-table-head>
-            </md-table-row>
-        </md-table-header>
-        <md-table-body>
-            <md-table-row v-for="entry in filteredData">
-                <md-table-cell v-for="key in columns">
-                    {{ showValue(key, entry) }}
-                </md-table-cell>
-            </md-table-row>
-        </md-table-body>
-    </md-table>
+    <md-table-card>
+        <md-toolbar>
+            <h1 class="md-title">Nutrition</h1>
+            <md-button class="md-icon-button">
+                <md-icon>filter_list</md-icon>
+            </md-button>
+
+            <md-button class="md-icon-button">
+                <md-icon>search</md-icon>
+            </md-button>
+        </md-toolbar>
+
+        <md-table-alternate-header md-selected-label="selected">
+            <md-button class="md-icon-button">
+                <md-icon>delete</md-icon>
+            </md-button>
+
+            <md-button class="md-icon-button">
+                <md-icon>more_vert</md-icon>
+            </md-button>
+        </md-table-alternate-header>
+
+        <md-table md-sort="dessert" md-sort-type="desc" @select="onSelect" @sort="onSort">
+            <md-table-header>
+                <md-table-row>
+                    <md-table-head v-for="key in columns"
+                                   :md-sort-by="key.name">
+                        {{ key.displayName | capitalize }}
+                    </md-table-head>
+                </md-table-row>
+            </md-table-header>
+
+            <md-table-body>
+                <md-table-row v-for="(entry, rowIndex) in filteredData" :key="rowIndex" :md-item="entry" md-selection>
+                    <md-table-cell v-for="key in columns">
+                        {{ showValue(key, entry) }}
+                    </md-table-cell>
+                </md-table-row>
+            </md-table-body>
+        </md-table>
+
+        <md-table-pagination
+                md-size="5"
+                md-total="10"
+                md-page="1"
+                md-label="Rows"
+                md-separator="of"
+                :md-page-options="[5, 10, 25, 50]"
+                @pagination="onPagination"></md-table-pagination>
+    </md-table-card>
+
+
 
     <div v-if="fullFledged">
         <md-button class="md-primary" @click.native="$refs['dialog'].open()">추가</md-button>
