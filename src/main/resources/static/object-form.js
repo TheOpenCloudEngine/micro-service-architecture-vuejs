@@ -58,13 +58,13 @@ Vue.component('object-form', {
                     fd.component = "object-grid"
                     fd.elemClassName = fd.className.substring(2, fd.className.length - 1);
 
-                    self.options[fd.name]['editable'] = true;
+                    //self.options[fd.name]['editable'] = true;
 
                 }else if(fd.collectionClass){
                     fd.component = "object-grid"
                     fd.elemClassName = fd.collectionClass;
 
-                    self.options[fd.name]['editable'] = true;
+                    //self.options[fd.name]['editable'] = true;
 
                 }
             }
