@@ -13,6 +13,10 @@ public class GlobalRepositoryRestConfigurer extends RepositoryRestConfigurerAdap
                 .addMapping("/**")
                 .allowedOrigins("http://localhost:8081")
                 .allowedMethods("GET", "POST", "DELETE", "PUT");
+
+
+        config.exposeIdsFor(Product.class);
+        config.exposeIdsFor(Progress.class);
     }
 
 }

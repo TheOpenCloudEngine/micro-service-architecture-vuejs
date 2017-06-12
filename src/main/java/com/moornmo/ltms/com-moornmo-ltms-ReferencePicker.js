@@ -1,7 +1,7 @@
 var template;
 {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "object-grid.html", false);
+    xhr.open('GET', "com-moornmo-ltms-ReferencePicker.html", false);
     xhr.onload = function () {
         template = xhr.responseText
     }
@@ -9,29 +9,21 @@ var template;
 }
 
 
-Vue.component('object-grid', {
+Vue.component('com-moornmo-ltms-referencepicker', {
     template: template,
     props: {
-        data: Array,
-        // columns: Array,
-        filterKey: String,
-        java: String,
-        columnChanger: Object,
-        fullFledged: Boolean,
-        online: Boolean,
+        data: Object,
+        options: Object,
     },
-
 
     data: function () {
 
         var xhr = new XMLHttpRequest();
         var columns = [];
         var self = this;
-        var metadata;
-
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.options.class, false);
         xhr.onload = function () {
-            metadata = JSON.parse(xhr.responseText)
+            var metadata = JSON.parse(xhr.responseText)
             columns = metadata.fieldDescriptors;
 
             for(var i=0; i<columns.length; i++){
@@ -51,6 +43,7 @@ Vue.component('object-grid', {
                 }else if(item.collectionClass){
                     item.component = "object-grid"
                     item.elemClassName = item.collectionClass;
+
                 }
             }
 
@@ -62,9 +55,9 @@ Vue.component('object-grid', {
 
 
         return {
-            rowData: this.data,
+            rowData: [],
             columns: columns,
-            metadata: metadata,
+            java: this.options.class
         };
     },
 

@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/vue-material@0.7.1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
@@ -24,9 +24,12 @@
 <script src="object-form.js"></script>
 
 
-
-
 <div id="app">
+
+
+
+
+
     <form id="search">
         Search <input name="query" v-model="searchQuery">
     </form>
@@ -35,6 +38,7 @@
             :filter-key="searchQuery"
             :column-changer="columnChanger"
             :online = "true"
+            :data = "[]"
     >
     </object-grid>
 
@@ -67,9 +71,10 @@
     var app = new Vue({
         el: '#app',
         data: {
+            searchQuery: '',
             java: "com.moornmo.ltms.Product",
             data:
-                { curRestNum: 1,  optiNum: 1},
+                { curRestNum: 1,  optiNum: 1, props:[]},
             columnChanger: function(columns){
                 columns.push({
                     displayName: '코드',
@@ -84,6 +89,11 @@
 
 
 </script>
+
+
+
+
+
 
 </body>
 </html>
