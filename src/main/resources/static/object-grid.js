@@ -19,6 +19,7 @@ Vue.component('object-grid', {
         columnChanger: Object,
         fullFledged: Boolean,
         online: Boolean,
+        options: Object
     },
 
 
@@ -28,31 +29,55 @@ Vue.component('object-grid', {
         var columns = [];
         var self = this;
         var metadata;
+        var thisOptions = this.options;
 
         xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
         xhr.onload = function () {
             metadata = JSON.parse(xhr.responseText)
+
             columns = metadata.fieldDescriptors;
+            self.options = {};
 
             for(var i=0; i<columns.length; i++){
-                var item = columns[i];
+                var fd = columns[i];
 
-                if(item.attributes && item.attributes['hidden']){
+                if(fd.options && fd.values){
+                    fd.optionMap = {};
+                    for(var keyIdx in fd.options){
+                        var key = fd.options[keyIdx];
+                        fd.optionMap[key] = fd.values[keyIdx];
+                    }
+
+                    self.options[fd.name] = fd.optionMap;
+                }else{
+                    self.options[fd.name] = {};
+                }
+
+
+                if(fd.attributes && fd.attributes['hidden']){
                     columns.splice(i, 1);
                     i--;
-                }else if(item.className == "long" || item.className == "java.lang.Long" || item.className == "java.lang.Integer"){
-                    item.type = "number";
-                }else if(item.className == "java.util.Date" || item.className == "java.util.Calendar"){
-                    item.type = "date";
-                }else if(item.className.indexOf('[L') == 0 && item.className.indexOf(";") > 1){
-                    item.component = "object-grid"
-                    item.elemClassName = item.className.substring(2, item.className.length - 1);
+                }else if(fd.optionMap && fd.optionMap['vue-component'] && Vue.options.components[fd.optionMap['vue-component']]){
+                    fd.component = fd.optionMap['vue-component'];
+                }else if(fd.className == "long" || fd.className == "java.lang.Long" || fd.className == "java.lang.Integer"){
+                    fd.type = "number";
+                }else if(fd.className == "java.util.Date" || fd.className == "java.util.Calendar"){
+                    fd.type = "date";
+                }else if(fd.className.indexOf('[L') == 0 && fd.className.indexOf(";") > 1){
+                    fd.component = "object-grid"
+                    fd.elemClassName = fd.className.substring(2, fd.className.length - 1);
 
-                }else if(item.collectionClass){
-                    item.component = "object-grid"
-                    item.elemClassName = item.collectionClass;
+                    self.options[fd.name]['editable'] = true;
+
+                }else if(fd.collectionClass){
+                    fd.component = "object-grid"
+                    fd.elemClassName = fd.collectionClass;
+
+                    self.options[fd.name]['editable'] = true;
+
                 }
             }
+
 
             if(self.columnChanger){
                 self.columnChanger(columns);
@@ -65,6 +90,7 @@ Vue.component('object-grid', {
             rowData: this.data,
             columns: columns,
             metadata: metadata,
+            options_: (thisOptions ? thisOptions : {})
         };
     },
 

@@ -61,10 +61,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     /**
      *
-     * <property name="basePath" value="/"/>
-     <property name="bucketName" value="default"/>
-     <property name="serverIp" value="localhost"/>
-
+     * <bean class="CouchbaseStorage">
+     *    <property name="basePath" value="/"/>
+          <property name="bucketName" value="default"/>
+          <property name="serverIp" value="localhost"/>
+     </bean>
      */
     public Storage storage() {
         CouchbaseStorage storage = new CouchbaseStorage();
