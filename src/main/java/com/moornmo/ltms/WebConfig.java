@@ -44,7 +44,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("access_token");
+                .allowedHeaders("access_token", "Content-Type");
 
 //
 //        registry.addMapping("/**").allowedOrigins("*");

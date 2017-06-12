@@ -13,7 +13,7 @@ public class GlobalRepositoryRestConfigurer extends RepositoryRestConfigurerAdap
                 .addMapping("/**")
                 .allowedOrigins("http://localhost:8081")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
-                .allowedHeaders("access_token");
+                .allowedHeaders("access_token", "Content-Type");
 
 
 
