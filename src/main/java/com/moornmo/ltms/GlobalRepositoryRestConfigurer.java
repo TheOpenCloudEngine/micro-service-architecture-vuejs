@@ -12,7 +12,7 @@ public class GlobalRepositoryRestConfigurer extends RepositoryRestConfigurerAdap
         config.getCorsRegistry()
                 .addMapping("/**")
                 .allowedOrigins("http://localhost:8081")
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
                 .allowedHeaders("access_token");
 
 

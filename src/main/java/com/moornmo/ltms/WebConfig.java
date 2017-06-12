@@ -43,7 +43,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         registry.addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("access_token");
 
 //
@@ -54,7 +54,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ResourceManager resourceManager(){
+    public ResourceManager resourceManager() {
         ResourceManager resourceManager = new CachedResourceManager();
         resourceManager.setStorage(storage());
         return resourceManager;
@@ -65,14 +65,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      *
      * <bean class="CouchbaseStorage">
      *    <property name="basePath" value="/"/>
-          <property name="bucketName" value="default"/>
-          <property name="serverIp" value="localhost"/>
+     <property name="bucketName" value="default"/>
+     <property name="serverIp" value="localhost"/>
      </bean>
      */
     public Storage storage() {
         CouchbaseStorage storage = new CouchbaseStorage();
         storage.setBucketName("default");
-        storage.setServerIp("localhost");
+        storage.setServerIp("192.168.0.6");
 
         return storage;
     }
@@ -80,7 +80,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MetadataService metadataService() {
         CouchbaseMetadataService metadataService = new CouchbaseMetadataService();
-        metadataService.setCouchbaseServerIp("localhost");
+        metadataService.setCouchbaseServerIp("192.168.0.6");
         metadataService.setBucketName("default");
 
         return metadataService;
@@ -104,7 +104,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     @Primary
-    public JpaProperties jpaProperties(){
+    public JpaProperties jpaProperties() {
 
         JpaProperties propertiesMap = new JpaProperties();
         propertiesMap.getProperties().put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);

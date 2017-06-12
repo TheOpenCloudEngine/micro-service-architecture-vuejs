@@ -24,8 +24,6 @@
 <script src="object-form.js"></script>
 
 
-
-
 <div id="app">
 
     <div class="app-viewport" id="file-list">
@@ -36,23 +34,28 @@
 
             <md-list>
                 <md-list-item @click="$refs.sidebar.toggle()" class="md-primary">
-                    <md-icon>insert_drive_file</md-icon> <span>My files</span>
+                    <md-icon>insert_drive_file</md-icon>
+                    <span>My files</span>
                 </md-list-item>
 
                 <md-list-item @click="$refs.sidebar.toggle()">
-                    <md-icon>people</md-icon> <span>Shared with me</span>
+                    <md-icon>people</md-icon>
+                    <span>Shared with me</span>
                 </md-list-item>
 
                 <md-list-item @click="$refs.sidebar.toggle()">
-                    <md-icon>access_time</md-icon> <span>Recent</span>
+                    <md-icon>access_time</md-icon>
+                    <span>Recent</span>
                 </md-list-item>
 
                 <md-list-item @click="$refs.sidebar.toggle()">
-                    <md-icon>start</md-icon> <span>Starred</span>
+                    <md-icon>start</md-icon>
+                    <span>Starred</span>
                 </md-list-item>
 
                 <md-list-item @click="$refs.sidebar.toggle()">
-                    <md-icon>delete</md-icon> <span>Trash</span>
+                    <md-icon>delete</md-icon>
+                    <span>Trash</span>
                 </md-list-item>
             </md-list>
         </md-sidenav>
@@ -87,21 +90,22 @@
 
 
     <object-form ref="object-form"
-                :java="java"
-                :data = "data"
-                :online="true"
-        ></object-form>
+                 :java="java"
+                 :data="data"
+                 :online="true"
+    ></object-form>
 </div>
-
 
 
 <script>
 
 
-    var classDefinition;{
+    var classDefinition;
+    {
 
         var xhr = new XMLHttpRequest()
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product&access_token=" + localStorage['access_token'], false);
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product", false);
+        xhr.setRequestHeader("access_token", localStorage['access_token']);
         xhr.onload = function () {
             var jsonData = JSON.parse(xhr.responseText)
             classDefinition = jsonData;
@@ -113,8 +117,7 @@
         el: '#app',
         data: {
             java: "org.uengine.uml.model.ClassDefinition",
-            data:
-                classDefinition,
+            data: classDefinition,
 
         },
     })
