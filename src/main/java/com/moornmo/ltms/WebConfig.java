@@ -1,5 +1,6 @@
 package com.moornmo.ltms;
 
+import com.moornmo.framework.TenantAwareFilter;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.metaworks.multitenancy.ClassManager;
 import org.metaworks.multitenancy.CouchbaseMetadataService;
@@ -29,7 +30,7 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackageClasses = {MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
+@ComponentScan(basePackageClasses = {TenantAwareFilter.class, MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
 @EnableJpaRepositories(repositoryBaseClass = CustomGenericRepositoryImpl.class)
 public class WebConfig extends WebMvcConfigurerAdapter {
 //    @Override
@@ -42,7 +43,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         registry.addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("POST", "GET", "PUT", "DELETE");
+                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowedHeaders("access_token");
 
 //
 //        registry.addMapping("/**").allowedOrigins("*");

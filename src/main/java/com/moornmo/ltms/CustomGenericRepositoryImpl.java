@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 
 import com.moornmo.framework.AfterLoad;
 import com.moornmo.framework.BeforeSave;
+import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,7 +36,7 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
         this.entityInformation = entityInformation;
 
 
-        getEntityManager().setProperty("tenant-id", "tenantA");
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
 
     }
 
@@ -51,7 +52,7 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
     public List<E> findAll() {
 
 
-        getEntityManager().setProperty("tenant-id", "tenantA");
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
 
 
         return super.findAll(this.isRemoved());
@@ -104,7 +105,7 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
     @Override
     public <S extends E> S save(S entity) {
 
-        getEntityManager().setProperty("tenant-id", "tenantA");
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
 
         if(entity instanceof BeforeSave){
             ((BeforeSave)entity).beforeSave();
@@ -116,7 +117,7 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
     @Override
     public Page<E> findAll(Pageable pageable) {
 
-        getEntityManager().setProperty("tenant-id", "tenantA");
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
 
         Page<E> page = super.findAll(pageable);
 

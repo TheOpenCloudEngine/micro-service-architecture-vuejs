@@ -27,19 +27,12 @@
 <div id="app">
 
 
-
-
-
-    <form id="search">
-        Search <input name="query" v-model="searchQuery">
-    </form>
     <object-grid ref="grid"
             :java="java"
             :filter-key="searchQuery"
             :column-changer="columnChanger"
             :online = "true"
             :data = "[]"
-            :options="{pagination: true, toolbar: true}"
     >
     </object-grid>
 
@@ -48,7 +41,7 @@
     </md-button>
 
     <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
-        <md-dialog-title>제품 마스터 생성</md-dialog-title>
+        <md-dialog-title> 사용자 정보  </md-dialog-title>
 
         <md-dialog-content>
             <object-form ref="object-form"
@@ -73,18 +66,10 @@
         el: '#app',
         data: {
             searchQuery: '',
-            java: "com.moornmo.ltms.Product",
+            java: "com.moornmo.ltms.Person",
             data:
-                { curRestNum: 1,  optiNum: 1, props:[]},
-            columnChanger: function(columns){
-                columns.push({
-                    displayName: '코드',
-                    name: 'code',
-                    computed: function(item){
-                        return item.prodNumber + "-" + item.prodName + "-" + item.prodStandard;
-                    }
-                })
-            }
+                { props:[]},
+
         }
     })
 
