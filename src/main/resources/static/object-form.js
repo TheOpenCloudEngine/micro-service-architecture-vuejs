@@ -23,7 +23,10 @@ Vue.component('object-form', {
     created: function () {
         var xhr = new XMLHttpRequest()
         var self = this
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
+
+       // xhr.setRequestHeader("access_token", localStorage['access_token']);
+
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java + "&access_token=" +  localStorage['access_token'], false);
         xhr.onload = function () {
             var metadata = JSON.parse(xhr.responseText)
             self.columns = metadata.fieldDescriptors;
@@ -84,8 +87,9 @@ Vue.component('object-form', {
 
             var xhr = new XMLHttpRequest()
             var self = this
-            xhr.open('POST', "http://localhost:8080/" + path, false);
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.open('POST', "http://localhost:8080/" + path + "?access_token=" +  localStorage['access_token'], false);
+            //xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.overrideMimeType("application/json; charset=UTF-8");
             xhr.onload = function () {
                 console.log(xhr);
 

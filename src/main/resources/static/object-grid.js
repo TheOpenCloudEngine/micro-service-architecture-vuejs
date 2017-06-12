@@ -22,6 +22,18 @@ Vue.component('object-grid', {
         options: Object
     },
 
+    watcher: {
+        page: function(){
+            this.loadData();
+        } ,
+
+        size: function(){
+            this.loadData();
+
+        }
+
+    },
+
 
     data: function () {
 
@@ -31,7 +43,9 @@ Vue.component('object-grid', {
         var metadata;
         var thisOptions = this.options;
 
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java, false);
+
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=" + this.java + "&access_token=" +  localStorage['access_token'], false);
+        //xhr.setRequestHeader("Access-Token", localStorage['access_token']);
         xhr.onload = function () {
             metadata = JSON.parse(xhr.responseText)
 
@@ -90,29 +104,15 @@ Vue.component('object-grid', {
             rowData: this.data,
             columns: columns,
             metadata: metadata,
-            options_: (thisOptions ? thisOptions : {})
+            options_: (thisOptions ? thisOptions : {}),
+            page: 0,
+            size: 20
         };
     },
 
     created: function(){
 
-
-        if(this.online){
-
-            var pathElements = this.java.split(".");
-            var path = pathElements[pathElements.length-1].toLowerCase();
-            var xhr = new XMLHttpRequest()
-            var self = this
-
-            xhr.open('GET', "http://localhost:8080/" + path, false);
-
-            xhr.onload = function () {
-                var jsonData = JSON.parse(xhr.responseText)
-                self.rowData = jsonData._embedded[path];
-            }
-            xhr.send();
-
-        }
+        this.loadData();
 
     },
     computed: {
@@ -128,6 +128,35 @@ Vue.component('object-grid', {
         }
     },
     methods: {
+
+        loadData: function(){
+            if(this.online){
+
+                var page = this.page;
+                var size = this.size;
+
+                if(!page) page = 0;
+                if(!size) size = 20;
+
+
+                var pathElements = this.java.split(".");
+                var path = pathElements[pathElements.length-1].toLowerCase();
+                var xhr = new XMLHttpRequest()
+                var self = this
+
+
+                xhr.open('GET', "http://localhost:8080/" + path + "?access_token=" +  localStorage['access_token'] , false);//+ "&page=" + page + "&size=" + size, false);
+                //xhr.setRequestHeader("access_token", localStorage['access_token']);
+                xhr.onload = function () {
+                    var jsonData = JSON.parse(xhr.responseText)
+                    self.rowData = jsonData._embedded[path];
+                }
+                xhr.send();
+
+            }
+
+        },
+
         sortBy: function (key) {
             this.sortKey = key
             this.sortOrders[key] = this.sortOrders[key] * -1

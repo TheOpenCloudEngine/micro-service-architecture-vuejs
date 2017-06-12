@@ -101,7 +101,7 @@
     var classDefinition;{
 
         var xhr = new XMLHttpRequest()
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product", false);
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product&access_token=" + localStorage['access_token'], false);
         xhr.onload = function () {
             var jsonData = JSON.parse(xhr.responseText)
             classDefinition = jsonData;
