@@ -93,7 +93,8 @@ Vue.component('object-grid', {
             columns: columns,
             metadata: metadata,
             options_: (thisOptions ? thisOptions : {}),
-            pagination: {page: 1, size: 20}
+            pagination: {page: 1, size: 20},
+            sort: null
         };
     },
 
@@ -125,6 +126,12 @@ Vue.component('object-grid', {
 
         },
 
+        onSort: function(sort){
+            this.sort = sort;
+
+            this.loadData();
+        },
+
         loadData: function () {
             if (this.online) {
                 var page = this.pagination.page;
@@ -136,7 +143,7 @@ Vue.component('object-grid', {
                 var self = this
 
 
-                xhr.open('GET', "http://localhost:8080/" + path+ "?page=" + (page-1) + "&size=" + size, false);
+                xhr.open('GET', "http://localhost:8080/" + path+ "?page=" + (page-1) + "&size=" + size + (this.sort ? "&sort=" + this.sort.name + "," + this.sort.type : ""), false);
                 xhr.setRequestHeader("access_token", localStorage['access_token']);
                 xhr.onload = function () {
                     var jsonData = JSON.parse(xhr.responseText)
