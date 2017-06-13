@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:width="http://www.w3.org/1999/xhtml" xmlns:height="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@0.7.1"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vuetify/dist/vuetify.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Lato|Inconsolata" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="page.css">
+</head>
+<script>
+    Vue.use(VueMaterial)
+</script>
+<style>
+</style>
+<body>
+    <div id="app">
+        <div id="header">
+                <h3>Main Page</h3>
+        </div>
+        <div id="main" style="min-height: 643px; padding-right: 40px;padding-left: 40px;">
+            <div class="sidebar">
+                <div class="list">
+                    <ul class="menu-root">
+
+                        <li><a onclick='open_in_frame("/product.html", "Product", "#259b24")' class="sidebar-link" style="text-decoration:none">Product</a></li>
+
+                        <li><a onclick='open_in_frame("/progress.html", "Progress", "#7c4dff")' class="sidebar-link" style="text-decoration:none">Progress</a></li>
+
+                        <li><a onclick='open_in_frame("/selfservice.html", "Self Service", "#ffab40")' class="sidebar-link" style="text-decoration:none">Self Service</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="content examples with-sidebar">
+                <div class="h_iframe">
+                    <iframe id="my_frame" src='/product.html' frameborder="0" framespacing="0" marginheight="0" marginwidth="0" scrolling=no vspace="0"  allowfullscreen></iframe>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        function open_in_frame(url, name, color) {
+            $('#my_frame').attr('src', url);
+            $('#header').html('<h3>'+name+'<h3>');
+            $('#header').css('background-color', color);
+        }
+    </script>
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+
+        })
+
+
+    </script>
+</body>
+
+</html>
