@@ -19,19 +19,7 @@ Vue.component('object-grid', {
         columnChanger: Object,
         fullFledged: Boolean,
         online: Boolean,
-        options: Object
-    },
-
-    watcher: {
-        page: function () {
-            this.loadData();
-        },
-
-        size: function () {
-            this.loadData();
-
-        }
-
+        options: Object,
     },
 
 
@@ -105,8 +93,7 @@ Vue.component('object-grid', {
             columns: columns,
             metadata: metadata,
             options_: (thisOptions ? thisOptions : {}),
-            page: 0,
-            size: 20
+            pagination: {page: 1, size: 20}
         };
     },
 
@@ -129,14 +116,19 @@ Vue.component('object-grid', {
     },
     methods: {
 
+        onPagination: function(pagination){
+            //console.log(pagination);
+
+            this.pagination = pagination;
+
+            this.loadData();
+
+        },
+
         loadData: function () {
             if (this.online) {
-                var page = this.page;
-                var size = this.size;
-
-                if (!page) page = 0;
-                if (!size) size = 20;
-
+                var page = this.pagination.page;
+                var size = this.pagination.size;
 
                 var pathElements = this.java.split(".");
                 var path = pathElements[pathElements.length - 1].toLowerCase();
@@ -144,7 +136,7 @@ Vue.component('object-grid', {
                 var self = this
 
 
-                xhr.open('GET', "http://localhost:8080/" + path, false);//+ "&page=" + page + "&size=" + size, false);
+                xhr.open('GET', "http://localhost:8080/" + path+ "?page=" + (page-1) + "&size=" + size, false);
                 xhr.setRequestHeader("access_token", localStorage['access_token']);
                 xhr.onload = function () {
                     var jsonData = JSON.parse(xhr.responseText)
