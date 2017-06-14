@@ -72,7 +72,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public Storage storage() {
         CouchbaseStorage storage = new CouchbaseStorage();
         storage.setBucketName("default");
-        storage.setServerIp("192.168.0.6");
+        storage.setServerIp("localhost");
 
         return storage;
     }
@@ -80,7 +80,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MetadataService metadataService() {
         CouchbaseMetadataService metadataService = new CouchbaseMetadataService();
-        metadataService.setCouchbaseServerIp("192.168.0.6");
+        metadataService.setCouchbaseServerIp("localhost");
         metadataService.setBucketName("default");
 
         return metadataService;
