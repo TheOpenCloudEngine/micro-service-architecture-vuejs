@@ -7,12 +7,6 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vue-material@0.7.1"></script>
     <script src="//code.jquery.com/jquery.min.js"></script>
-    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet" type="text/css">
-    <script src="https://unpkg.com/vuetify/dist/vuetify.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script async="" src="//www.google-analytics.com/analytics.js"></script>
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Lato|Inconsolata" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="page.css">
 </head>
 <script>
@@ -21,51 +15,64 @@
 <style>
 </style>
 <body>
-    <div id="app">
-        <div id="header">
-                <h3>Main Page</h3>
-        </div>
-        <div id="main" style="min-height: 643px; padding-right: 40px;padding-left: 40px;">
-            <div class="sidebar">
-                <div class="list">
-                    <ul class="menu-root">
-
-                        <li><a onclick='open_in_frame("/product.html", "Product", "#259b24")' class="sidebar-link" style="text-decoration:none">Product</a></li>
-
-                        <li><a onclick='open_in_frame("/progress.html", "Progress", "#7c4dff")' class="sidebar-link" style="text-decoration:none">Progress</a></li>
-
-                        <li><a onclick='open_in_frame("/selfservice.html", "Self Service", "#ffab40")' class="sidebar-link" style="text-decoration:none">Self Service</a></li>
-
-                    </ul>
-                </div>
-            </div>
-
-
-            <div class="content examples with-sidebar">
-                <div class="h_iframe">
-                    <iframe id="my_frame" src='/product.html' frameborder="0" framespacing="0" marginheight="0" marginwidth="0" scrolling=no vspace="0"  allowfullscreen></iframe>
-                </div>
-            </div>
-
-
+<div id="app">
+    <div class="header background">
+        <div class="header-zone">
+            <span class="menu-icon menu-icon-back"></span>
+            <span class="header-text"> 메인 페이지 </span>
         </div>
     </div>
-    <script>
-        function open_in_frame(url, name, color) {
-            $('#my_frame').attr('src', url);
-            $('#header').html('<h3>'+name+'<h3>');
-            $('#header').css('background-color', color);
-        }
-    </script>
-    <script>
+    <nav class="left-menu" aria-hidden="false">
+        <div class="left-menu-design">
+            <ul class="menu-ground">
+                <li class="select-menu">
+                    <span onclick='open_in_frame("/product.html", "Product", "#4285f4")' class="sM" title="Test">Product</span>
+                </li>
+                <li class="select-menu">
+                    <span onclick='open_in_frame("/progress.html", "Progress", "#ef6c00")' class="sM" title="Test">Progress</span>
+                </li>
+                <li class="select-menu">
+                    <span onclick='open_in_frame("/selfservice.html", "Self Service", "#0f9d58")' class="sM" title="Test">Selfservice</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="Nr">
+        <div class="mP">
+            <div class="c4 ad">
+                <div class="cM bz">
+                    <div class="tE">
+                        <div class="h_iframe">
+                            <iframe id="my_frame" src='/product.html' frameborder="0" framespacing="0" marginheight="0" marginwidth="0" scrolling=no vspace="0"  allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function open_in_frame(url, name, color) {
+        $('#my_frame').attr('src', url);
+        $('.header-text').text(name);
+        $('.background').css('background-color', color);
+        $('li').click(
+                function(){
+                    $('li').removeClass('hA')
+                    $(this).addClass('hA')
+                }
+        )
+    }
+</script>
+<script>
 
-        var app = new Vue({
-            el: '#app',
+    var app = new Vue({
+        el: '#app',
 
-        })
+    })
 
 
-    </script>
+</script>
 </body>
 
 </html>
