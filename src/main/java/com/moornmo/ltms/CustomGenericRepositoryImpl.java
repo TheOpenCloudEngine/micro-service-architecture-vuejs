@@ -43,9 +43,12 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
     @Override
     @Transactional
     public void delete(final E entity) {
-        Assert.notNull(entity, "Entity object must not be null!");
+        //Assert.notNull(entity, "Entity object must not be null!");
        // entity.setChangeDate(Calendar.getInstance().getTime());
         //entity.setDeleted(true);
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
+
+        super.delete(entity);
     }
 
     @Override
@@ -55,37 +58,40 @@ public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
         getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
 
 
-        return super.findAll(this.isRemoved());
+        return super.findAll();
     }
 
     @Override
     public E findOne(final PK pk) {
-        return this.findOne(this.isRemovedByID(pk));
+//        return this.findOne(this.isRemovedByID(pk));
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
+
+        return super.findOne(pk);
     }
 
-    private Specification<E> isRemoved() {
-        return new Specification<E>() {
+//    private Specification<E> isRemoved() {
+//        return new Specification<E>() {
+//
+//            @Override
+//            public Predicate toPredicate(final Root<E> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
+//                return cb.isFalse(root.<Boolean> get("deleted"));
+//            }
+//
+//        };
+//    }
 
-            @Override
-            public Predicate toPredicate(final Root<E> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-                return cb.isFalse(root.<Boolean> get("deleted"));
-            }
-
-        };
-    }
-
-    private Specification<E> isRemovedByID(final PK pk) {
-        return new Specification<E>() {
-
-            @Override
-            public Predicate toPredicate(Root<E> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                final Predicate id = cb.equal(root.get("id"), pk);
-                final Predicate hidden = cb.isFalse(root.<Boolean> get("deleted"));
-                return cb.and(id, hidden);
-            }
-
-        };
-    }
+//    private Specification<E> isRemovedByID(final PK pk) {
+//        return new Specification<E>() {
+//
+//            @Override
+//            public Predicate toPredicate(Root<E> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+//                final Predicate id = cb.equal(root.get("id"), pk);
+//                final Predicate hidden = cb.isFalse(root.<Boolean> get("deleted"));
+//                return cb.and(id, hidden);
+//            }
+//
+//        };
+//    }
 
 
     private Specification<E> isMyTenantData(final String tenantId) {

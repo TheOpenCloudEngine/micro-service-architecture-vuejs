@@ -49,7 +49,7 @@ public class TenantAwareFilter implements Filter {
 
                 tenantId = userName.split("@")[1];
 
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 throw new RuntimeException("Invalid login ", e);
             }
 
