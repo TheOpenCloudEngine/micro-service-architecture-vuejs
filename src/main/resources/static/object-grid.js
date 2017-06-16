@@ -19,7 +19,7 @@ Vue.component('object-grid', {
         columnChanger: Object,
         fullFledged: Boolean,
         online: Boolean,
-        options: Object,
+        options: Object
     },
 
 
@@ -94,11 +94,20 @@ Vue.component('object-grid', {
             metadata: metadata,
             options_: (thisOptions ? thisOptions : {}),
             pagination: {page: 1, size: 20},
-            sort: null
+            sort: null,
+            selected: null,
+            selectedLength: null,
+            selectedClass: null
         };
     },
 
     created: function () {
+        this.dc = {
+            title: '데이터 삭제',
+            contentHtml: '해당 데이터를 삭제 하시겠습니까?',
+            cancel: 'No',
+            ok: 'Yes',
+        }
 
         this.loadData();
 
@@ -182,6 +191,56 @@ Vue.component('object-grid', {
 
             this.data = this.rowData;
 
-        }
+        },
+        submit_: function (pNo, num) {
+            var path = 'product';
+            var xhr = new XMLHttpRequest()
+            var self = this
+            var numPNO = pNo;
+            xhr.open('DELETE', "http://localhost:8080/" + path + "/"+numPNO, false);    
+            xhr.setRequestHeader("access_token", localStorage['access_token']);
+            xhr.onload = function () {
+                console.log(xhr);
+
+            }
+            xhr.send();
+        
+            this.rowData.splice(num);
+
+
+         },
+
+        openDialog: function(ref) {
+            this.$refs[ref].open();
+        },
+        closeDialog: function(ref) {
+            this.$refs[ref].close();
+          },
+        onOpen: function(){
+            console.log('Opened');
+          },
+        onClose: function(type) {
+
+            if(type == 'ok'){
+                this.deleteSubmit();
+            }
+            console.log('Closed', type);
+          },
+
+          onSelect: function(selected){
+
+                this.selected = selected;
+
+          },
+
+          deleteSubmit: function(){
+            var selectedClass = window.document.getElementsByClassName("md-table-row md-selected");
+           for(var i =0; i < selectedClass.length; i++){
+                var num = selectedClass[i].sectionRowIndex;
+                var pNo = this.selected[num].pNo;
+                this.submit_(pNo, num);
+           }
+            
+          }
     }
 })
