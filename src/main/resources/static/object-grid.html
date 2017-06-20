@@ -25,12 +25,16 @@
                 <md-icon>delete</md-icon>
             </md-button>
 
+            <md-button class="md-icon-button" @click.native="$refs['dialog'].open()">
+                <md-icon>update</md-icon>
+            </md-button>
+
             <md-button class="md-icon-button">
                 <md-icon>more_vert</md-icon>
             </md-button>
         </md-table-alternate-header>
 
-        <md-table md-sort="dessert" md-sort-type="desc" @select="onSelect" @sort="onSort">
+        <md-table md-sort="dessert" md-sort-type="desc" @select="onSelect" @sort="onSort" >
             <md-table-header>
                 <md-table-row>
                     <md-table-head v-for="key in columns"
@@ -56,13 +60,31 @@
         <md-table-pagination
                 v-if="options_.pagination"
                 md-size="5"
-                md-total="10"
+                md-total="1000"
                 md-page="1"
                 md-label="Rows"
                 md-separator="of"
                 :md-page-options="[5, 10, 25, 50]"
                 @pagination="onPagination"></md-table-pagination>
     </md-table-card>
+
+    <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
+        <md-dialog-title>제품 마스터 생성</md-dialog-title>
+
+        <md-dialog-content>
+            <object-form ref="object-form"
+                    :java="java"
+                    :data = "data"
+                    :event-listeners = "['grid']"
+            >
+            </object-form>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button class="md-primary" @click.native="$refs['object-form'].submit_(); $refs['dialog'].close()">저장</md-button>
+            <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
+        </md-dialog-actions>
+    </md-dialog>
 
    
 

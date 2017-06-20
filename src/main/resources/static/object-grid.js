@@ -130,14 +130,13 @@ Vue.component('object-grid', {
             //console.log(pagination);
 
             this.pagination = pagination;
-
+           //this.infoExtraction(pagination);
             this.loadData();
 
         },
 
         onSort: function(sort){
             this.sort = sort;
-
             this.loadData();
         },
 
@@ -155,7 +154,7 @@ Vue.component('object-grid', {
                 xhr.open('GET', "http://localhost:8080/" + path+ "?page=" + (page-1) + "&size=" + size + (this.sort ? "&sort=" + this.sort.name + "," + this.sort.type : ""), false);
                 xhr.setRequestHeader("access_token", localStorage['access_token']);
                 xhr.onload = function () {
-                    var jsonData = JSON.parse(xhr.responseText)
+                    var jsonData = JSON.parse(xhr.responseText);
                     self.rowData = jsonData._embedded[path];
                 }
                 xhr.send();
@@ -192,12 +191,11 @@ Vue.component('object-grid', {
             this.data = this.rowData;
 
         },
-        submit_: function (pNo, num) {
+        submit_: function (key, num) {
             var path = 'product';
             var xhr = new XMLHttpRequest()
             var self = this
-            var numPNO = pNo;
-            xhr.open('DELETE', "http://localhost:8080/" + path + "/"+numPNO, false);    
+            xhr.open('DELETE', "http://localhost:8080/" + path + "/"+key, false);    
             xhr.setRequestHeader("access_token", localStorage['access_token']);
             xhr.onload = function () {
                 console.log(xhr);
@@ -205,7 +203,7 @@ Vue.component('object-grid', {
             }
             xhr.send();
         
-            this.rowData.splice(num);
+      
 
 
          },
@@ -233,14 +231,17 @@ Vue.component('object-grid', {
 
           },
 
+
           deleteSubmit: function(){
-            var selectedClass = window.document.getElementsByClassName("md-table-row md-selected");
-           for(var i =0; i < selectedClass.length; i++){
-                var num = selectedClass[i].sectionRowIndex;
-                var pNo = this.selected[num].pNo;
-                this.submit_(pNo, num);
-           }
+             for(var i in this.selected){
+                   var primaryKey = (this.selected[i][this.metadata.keyFieldDescriptor.name]);
+                   this.submit_(primaryKey);
+
+                }
+
+
+                   this.loadData();
             
-          }
-    }
+         }
+     }
 })
