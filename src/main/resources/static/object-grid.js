@@ -1,7 +1,7 @@
 var template;
 {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "object-grid.html", false);
+    xhr.open('GET', "/object-grid.html", false);
     xhr.onload = function () {
         template = xhr.responseText
     }

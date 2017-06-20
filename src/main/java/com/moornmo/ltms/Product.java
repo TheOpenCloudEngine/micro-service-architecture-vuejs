@@ -7,12 +7,12 @@ import com.moornmo.framework.AfterLoad;
 import com.moornmo.framework.BeforeSave;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Name;
-import org.metaworks.annotation.Order;
+import org.jvnet.hk2.annotations.Service;
+import org.metaworks.annotation.*;
 
 import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -202,6 +202,14 @@ public class Product implements BeforeSave, AfterLoad {
             for(Property property : getProps()){
                 getProps_().put(property.getPropName(), property.getValue());
             }
+        }
+    }
+
+
+    @ServiceMethod(callByContent = true)
+    public void validate(){
+        if(getProdName()==null){
+            throw new IllegalArgumentException("Prod name must be not null");
         }
     }
 }
