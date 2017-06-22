@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vue-material@0.7.1"></script>
@@ -22,6 +24,7 @@
 
 <script src="object-grid.js"></script>
 <script src="object-form.js"></script>
+<script src="class-selector.js"></script>
 
 
 <div id="app">
@@ -33,6 +36,13 @@
     ></object-form>
 </div>
 
+<script>
+    $( function() {
+        $('table tbody').sortable();
+        $('table tbody').disableSelection();
+    } );
+</script>
+
 
 <script>
 
@@ -41,7 +51,7 @@
     {
 
         var xhr = new XMLHttpRequest()
-        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Product", false);
+        xhr.open('GET', "http://localhost:8080/classdefinition?className=com.moornmo.ltms.Mail", false);
         xhr.setRequestHeader("access_token", localStorage['access_token']);
         xhr.onload = function () {
             var jsonData = JSON.parse(xhr.responseText)

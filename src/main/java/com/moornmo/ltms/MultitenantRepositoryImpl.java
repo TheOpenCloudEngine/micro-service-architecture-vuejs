@@ -16,21 +16,20 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.List;
 
 
 @Transactional
-public class CustomGenericRepositoryImpl<E, PK extends Serializable> extends
-        SimpleJpaRepository<E, PK> implements CustomGenericRepository<E, PK> {
+public class MultitenantRepositoryImpl<E, PK extends Serializable> extends
+        SimpleJpaRepository<E, PK> implements MultitenantRepository<E, PK> {
 
     private final EntityManager entityManager;
     private final JpaEntityInformation<E, ?> entityInformation;
 
-    public CustomGenericRepositoryImpl(final JpaEntityInformation<E, ?> entityInformation,
-                                       final EntityManager entityManager) {
+    public MultitenantRepositoryImpl(final JpaEntityInformation<E, ?> entityInformation,
+                                     final EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
         this.entityInformation = entityInformation;

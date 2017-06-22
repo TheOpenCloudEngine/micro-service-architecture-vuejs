@@ -34,9 +34,10 @@ Vue.component('reference-picker', {
 
         var java = this.options.class;
 
-        var xhr = new XMLHttpRequest()
+        var xhr = new XMLHttpRequest();
         var self = this
         xhr.open('GET', "http://localhost:8080/classdefinition?className=" + java, false);
+        xhr.setRequestHeader("access_token", localStorage['access_token']);
 
         var metadata;
         xhr.onload = function () {
@@ -63,6 +64,7 @@ Vue.component('reference-picker', {
         var self = this
 
         xhr.open('GET', "http://localhost:8080/" + path, false);
+        xhr.setRequestHeader("access_token", localStorage['access_token']);
 
         xhr.onload = function () {
             var jsonData = JSON.parse(xhr.responseText)

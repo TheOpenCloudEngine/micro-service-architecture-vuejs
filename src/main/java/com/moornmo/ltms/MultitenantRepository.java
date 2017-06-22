@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CustomGenericRepository<E, PK extends Serializable> extends
+public interface MultitenantRepository<E, PK extends Serializable> extends
         JpaRepository<E, PK>, JpaSpecificationExecutor<E> {
 
   //  EntityManager getEntityManager();

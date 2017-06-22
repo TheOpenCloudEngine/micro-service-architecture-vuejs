@@ -7,15 +7,11 @@ import org.metaworks.multitenancy.CouchbaseMetadataService;
 import org.metaworks.multitenancy.MetadataService;
 import org.metaworks.rest.MetaworksRestService;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -25,13 +21,12 @@ import org.uengine.modeling.resource.Storage;
 import org.uengine.persistence.couchbase.CouchbaseStorage;
 
 import javax.sql.DataSource;
-import java.util.List;
 import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackageClasses = {TenantAwareFilter.class, MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
-@EnableJpaRepositories(repositoryBaseClass = CustomGenericRepositoryImpl.class)
+@EnableJpaRepositories(repositoryBaseClass = MultitenantRepositoryImpl.class)
 public class WebConfig extends WebMvcConfigurerAdapter {
 //    @Override
 //    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

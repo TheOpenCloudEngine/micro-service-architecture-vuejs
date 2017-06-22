@@ -22,22 +22,51 @@
             var self = this;
             var options = keditor.options;
 
-            form.append(
-                '<form class="form-horizontal">' +
-                '   <div class="form-group">' +
-                '       <label for="photo-width" class="col-sm-12">Java</label>' +
-                '       <div class="col-sm-12">' +
-                '           <input id="java" class="form-control" />' +
-                '       </div>' +
-                '   </div>' +
-                '</form>'
-            );
+            var id = keditor.getSettingComponent()[0].id;
+            var elem = keditor.vueInstances[id].$children[0];
+            var tagName = elem.$options._componentTag;
+            var propDefs = Vue.options.components[tagName].options.props;
 
-            var java = form.find('#java');
-            java.on('change', function () {
-                var id = keditor.getSettingComponent()[0].id;
-                keditor.vueInstances[id].$children[0].java = java.val();
-            });
+            var html =
+            '<form class="form-horizontal">';
+
+            for(var propName in propDefs){
+
+                var propDef = propDefs[propName];
+
+                html+=
+                '   <div class="form-group">' +
+                '       <label for="photo-width" class="col-sm-12">'+ propName +'</label>' +
+                '       <div class="col-sm-12">' +
+                '           <input id="' + propName + '" class="form-control" />' +
+                '       </div>' +
+                '   </div>';
+
+            }
+
+            html += '</form>';
+
+            form.append(html);
+
+            for(var propName in propDefs){
+
+                var propDef = propDefs[propName];
+
+                var input = form.find('#' + propName);
+
+                input.on('change', function (e) {
+                    var propName = e.originalEvent.srcElement.id;
+                    elem[propName] = e.originalEvent.srcElement.value;
+                });
+            }
+
+            //
+            // var data = form.find('#data');
+            // data.on('change', function () {
+            //     elem.data = data.val();
+            // });
+
+
         },
 
         showSettingForm: function (form, component, keditor) {

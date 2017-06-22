@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vue-material@0.7.1"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -29,12 +26,10 @@
 <div id="app">
 
     <object-grid ref="grid"
-            :java="java"
-            :filter-key="searchQuery"
-            :column-changer="columnChanger"
-            :online = "true"
-            :data = "[]"
-            :options="{pagination: true, toolbar: true}"
+                 :java="java"
+                 :online = "true"
+                 :data = "[]"
+                 :options="{pagination: true, toolbar: true}"
     >
     </object-grid>
 
@@ -43,13 +38,13 @@
     </md-button>
 
     <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
-        <md-dialog-title>제품 마스터 생성</md-dialog-title>
+        <md-dialog-title>메일 리스트 생성</md-dialog-title>
 
         <md-dialog-content>
             <object-form ref="object-form"
-                    :java="java"
-                    :data = "data"
-                    :event-listeners = "['grid']"
+                         :java="java"
+                         :event-listeners = "['grid']"
+                         :data="{}"
             >
             </object-form>
         </md-dialog-content>
@@ -59,6 +54,8 @@
             <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
         </md-dialog-actions>
     </md-dialog>
+
+
 </div>
 
 <script>
@@ -66,22 +63,10 @@
     var app = new Vue({
         el: '#app',
         data: {
-            searchQuery: '',
-            java: "com.moornmo.ltms.Product",
-            data:
-                { curRestNum: 1,  optiNum: 1, props:[]},
-            columnChanger: function(columns){
-                columns.push({
-                    displayName: '코드',
-                    name: 'code',
-                    computed: function(item){
-                        return item.prodNumber + "-" + item.prodName + "-" + item.prodStandard;
-                    }
-                })
-            }
+            java: "com.moornmo.ltms.Mail"
+
         }
     })
-
 
 </script>
 
