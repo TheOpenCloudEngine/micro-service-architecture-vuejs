@@ -8,6 +8,14 @@
           @close="onClose"
           ref="dialog5">
 </md-dialog-confirm>
+<md-dialog-alert
+        md-content="한개 선택 후, 수정해주시기 바랍니다."
+        md-ok-text="확인"
+        @open="onOpen"
+        @close="onClose"
+        ref="dialog3">
+</md-dialog-alert>
+
     <md-table-card>
         <md-toolbar v-if="options_.toolbar">
             <h1 class="md-title">{{metadata.displayName}}</h1>
@@ -25,9 +33,12 @@
                 <md-icon>delete</md-icon>
             </md-button>
 
-            <md-button class="md-icon-button" @click.native="$refs['dialog'].open()">
+<!-- @click.native="$refs['dialog'].open()"-->
+
+            <md-button class="md-icon-button" @click.native="duplicationCheck()">
                 <md-icon>update</md-icon>
             </md-button>
+
 
             <md-button class="md-icon-button">
                 <md-icon>more_vert</md-icon>
@@ -74,14 +85,14 @@
         <md-dialog-content>
             <object-form ref="object-form"
                     :java="java"
-                    :data = "data"
+                    :data = "checked"
                     :event-listeners = "['grid']"
             >
             </object-form>
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button class="md-primary" @click.native="$refs['object-form'].submit_(); $refs['dialog'].close()">저장</md-button>
+            <md-button class="md-primary" @click.native="$refs['object-form'].update_(); $refs['dialog'].close()">수정</md-button>
             <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
         </md-dialog-actions>
     </md-dialog>
@@ -91,20 +102,21 @@
     <div v-if="fullFledged">
         <md-button class="md-primary" @click.native="$refs['dialog'].open()">추가</md-button>
 
-        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog">
+        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog" id="dialog">
             <md-dialog-title>New</md-dialog-title>
 
             <md-dialog-content>
                 <object-form ref="object-form"
                              :java="java"
-                             :data = "{}"
+                             :data = "{ curRestNum: 1,  optiNum: 1 }"
                              :event-listeners = "['grid']"
+                             :checked="checked"
                 >
                 </object-form>
             </md-dialog-content>
 
             <md-dialog-actions>
-                <md-button class="md-primary" @click.native="addObject($refs['object-form'].data); $refs['dialog'].close()">저장</md-button>
+                <md-button class="md-primary" @click.native="addObject($refs['object-form'].data); $refs['dialog'].close()">수정</md-button>
                 <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
             </md-dialog-actions>
         </md-dialog>

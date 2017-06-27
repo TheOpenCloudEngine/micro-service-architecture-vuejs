@@ -16,7 +16,9 @@ Vue.component('object-form', {
         data: Object,
         eventListeners: Array,
         online: Boolean,
-        options: Object
+        options: Object,
+        checked: Object,
+        pNo: String,
     },
 
     watch:{
@@ -113,6 +115,33 @@ Vue.component('object-form', {
             var self = this
             xhr.open('POST', "http://localhost:8080/" + path, false);
             //xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("access_token", localStorage['access_token']);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            xhr.onload = function () {
+                console.log(xhr);
+
+            }
+            xhr.send(JSON.stringify(this.data));
+
+            if (this.eventListeners) {
+                this.eventListeners.forEach(function (listenerRef) {
+                    var listener = self.$root.$refs[listenerRef];
+
+                    if (listener.onEvent) {
+                        listener.onEvent('saved', self.data);
+                    }
+                });
+            }
+        },
+         update_: function () {
+
+            var pathElements = this.java.split(".");
+            var path = pathElements[pathElements.length - 1].toLowerCase();
+
+            console.log(this.data);
+            var xhr = new XMLHttpRequest()
+            var self = this
+            xhr.open('PUT', "http://localhost:8080/" + path + "/" +this.data.pNo, false);
             xhr.setRequestHeader("access_token", localStorage['access_token']);
             xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             xhr.onload = function () {
