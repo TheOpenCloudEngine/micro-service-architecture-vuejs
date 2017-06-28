@@ -34,11 +34,11 @@
             </md-button>
 
 <!-- @click.native="$refs['dialog'].open()"-->
-
+            <!--
             <md-button class="md-icon-button" @click.native="duplicationCheck()">
                 <md-icon>update</md-icon>
             </md-button>
-
+            -->
 
             <md-button class="md-icon-button">
                 <md-icon>more_vert</md-icon>
@@ -56,7 +56,7 @@
             </md-table-header>
 
             <md-table-body>
-                <md-table-row v-for="(entry, rowIndex) in filteredData" :key="rowIndex" :md-item="entry" md-selection>
+                <md-table-row v-for="(entry, rowIndex) in filteredData" :key="rowIndex" :md-item="entry" md-selection v-on:dblclick.native = "doubleClickEvent(entry)">
                     <md-table-cell v-for="key in columns">
                         <span v-if="!options_.editable">{{ showValue(key, entry) }}</span>
 
@@ -99,29 +99,9 @@
 
    
 
-    <div v-if="fullFledged">
-        <md-button class="md-primary" @click.native="$refs['dialog'].open()">추가</md-button>
+   
 
-        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog" id="dialog">
-            <md-dialog-title>New</md-dialog-title>
-
-            <md-dialog-content>
-                <object-form ref="object-form"
-                             :java="java"
-                             :data = "{ curRestNum: 1,  optiNum: 1 }"
-                             :event-listeners = "['grid']"
-                             :checked="checked"
-                >
-                </object-form>
-            </md-dialog-content>
-
-            <md-dialog-actions>
-                <md-button class="md-primary" @click.native="addObject($refs['object-form'].data); $refs['dialog'].close()">수정</md-button>
-                <md-button class="md-primary" @click.native="$refs['dialog'].close()">닫기</md-button>
-            </md-dialog-actions>
-        </md-dialog>
-
-    </div>
+    
 
 
 </div>

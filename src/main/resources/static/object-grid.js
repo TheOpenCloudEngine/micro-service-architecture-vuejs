@@ -261,6 +261,7 @@ Vue.component('object-grid', {
              this.loadData();
             
          },
+         /*
           duplicationCheck: function() {
             var checkedNum = window.document.getElementsByClassName("md-checked").length;
             var obj = this.selected;
@@ -271,10 +272,16 @@ Vue.component('object-grid', {
                 
              }
             this.checked = obj2;
-                this.$refs['dialog'].open();
+            this.$refs['dialog'].open();
             }else{
                 this.$refs['dialog3'].open();
             }
+         },*/
+         doubleClickEvent: function(object){
+            var obj = object;
+            delete obj['_links'];
+            this.checked = obj;
+            this.$refs['dialog'].open();
          }
      }
 })
