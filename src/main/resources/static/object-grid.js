@@ -19,7 +19,8 @@ Vue.component('object-grid', {
         columnChanger: Object,
         fullFledged: Boolean,
         online: Boolean,
-        options: Object
+        options: Object,
+        checked: Array,
     },
 
 
@@ -49,6 +50,10 @@ Vue.component('object-grid', {
             contentHtml: '해당 데이터를 삭제 하시겠습니까?',
             cancel: 'No',
             ok: 'Yes',
+        },
+        this.alert ={
+             content: '중복 체크는 수정 할 수가 없습니다.',
+             ok: 'Cool!'
         }
 
         this.loadData();
@@ -227,6 +232,7 @@ Vue.component('object-grid', {
          },
 
         openDialog: function(ref) {
+            alert(ref);
             this.$refs[ref].open();
         },
         closeDialog: function(ref) {
@@ -250,6 +256,7 @@ Vue.component('object-grid', {
           },
 
 
+
           deleteSubmit: function(){
              for(var i in this.selected){
                    var primaryKey = (this.selected[i][this.metadata.keyFieldDescriptor.name]);
@@ -259,6 +266,28 @@ Vue.component('object-grid', {
 
              this.loadData();
             
+         },
+         /*
+          duplicationCheck: function() {
+            var checkedNum = window.document.getElementsByClassName("md-checked").length;
+            var obj = this.selected;
+            var obj2 = "";
+            if(checkedNum == 1){
+                for(key in obj){
+                obj2 = obj[key]
+                
+             }
+            this.checked = obj2;
+            this.$refs['dialog'].open();
+            }else{
+                this.$refs['dialog3'].open();
+            }
+         },*/
+         doubleClickEvent: function(object){
+            var obj = object;
+            delete obj['_links'];
+            this.checked = obj;
+            this.$refs['dialog'].open();
          }
      }
 })
