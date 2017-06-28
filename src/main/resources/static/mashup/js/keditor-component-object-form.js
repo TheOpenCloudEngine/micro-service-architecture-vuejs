@@ -12,6 +12,31 @@
             img.css('display', 'inline-block');
         },
 
+        getContent: function (component, keditor) {
+
+            var id = component[0].id;
+            var elem = keditor.vueInstances[id].$children[0];
+            var tagName = elem.$options._componentTag;
+            var propDefs = Vue.options.components[tagName].options.props;
+
+            var html =
+                '<' + tagName
+
+            for(var propName in propDefs){
+
+                var propDef = propDefs[propName];
+
+                html+=
+                    ' ' + propName + "='" + elem[propName] + "'";
+
+            }
+
+            html += '/>';
+
+
+            return html;
+        },
+
         settingEnabled: true,
 
         settingTitle: 'Object Form Settings',

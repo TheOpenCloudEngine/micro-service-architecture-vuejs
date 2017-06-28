@@ -34,6 +34,12 @@ Vue.component('object-grid', {
             this.columns = initProps.columns;
             this.metadata = initProps.metadata;
 
+        },
+        options: function(val){
+            var initProps = this.initGrid();
+
+            this.columns = initProps.columns;
+            this.metadata = initProps.metadata;
         }
     },
 

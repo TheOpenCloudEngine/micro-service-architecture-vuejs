@@ -43,6 +43,7 @@
 <div id="app">
 
     <div id="keditor1">
+
     </div>
 
 </div>
@@ -53,14 +54,10 @@
     $(function() {
 
 
-//        var app = new Vue({
-//            el: "#keditor1",
-//            data: {}
-//        });
-        app = new Vue({
-            el: "#app",
-            data: {}
-        });
+        var content = localStorage["keditor.editing.content"];
+
+        if(content)
+            $('#keditor1').innerHTML(content);
 
         $('#keditor1').keditor({
            // iframeMode: true,

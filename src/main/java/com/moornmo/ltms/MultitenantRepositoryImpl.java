@@ -60,6 +60,18 @@ public class MultitenantRepositoryImpl<E, PK extends Serializable> extends
         return super.findAll();
     }
 
+
+    @Override
+    public List<E> findDynamicQuery() {
+
+
+        getEntityManager().setProperty("tenant-id", TenantContext.getThreadLocalInstance().getTenantId());
+
+
+        return super.findAll();
+    }
+
+
     @Override
     public E findOne(final PK pk) {
 //        return this.findOne(this.isRemovedByID(pk));
