@@ -40,20 +40,6 @@ public class Application extends Metaworks4BaseApplication {
 
 		ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
 
-		ProgressRepository progressRepository = applicationContext.getBean(ProgressRepository.class);
-
-		//test logics
-
-//		Product product = new Product();
-//		product.setpNo(1252l);
-//
-//		Progress progress = new Progress();
-//		progress.setProduct(product);
-//		progress.setProgName("progress");
-//		progress.setProgType("type");
-//
-//		progressRepository.save(progress);
-
 	}
 
 }

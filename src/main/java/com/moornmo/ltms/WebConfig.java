@@ -4,7 +4,7 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.metaworks.multitenancy.ClassManager;
 import org.metaworks.multitenancy.CouchbaseMetadataService;
 import org.metaworks.multitenancy.MetadataService;
-import org.metaworks.multitenancy.TenantAwareFilter;
+import org.metaworks.multitenancy.tenantawarefilter.TenantAwareFilter;
 import org.metaworks.springboot.configuration.Metaworks4WebConfig;
 import org.metaworks.multitenancy.persistence.MultitenantRepositoryImpl;
 import org.metaworks.rest.MetaworksRestService;
@@ -26,7 +26,7 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackageClasses = {TenantAwareFilter.class, MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
+@ComponentScan(basePackageClasses = {TenantAwareFilter.class, MetaworksRestService.class, WebConfig.class, ClassManager.class, MetadataService.class})
 @EnableJpaRepositories(repositoryBaseClass = MultitenantRepositoryImpl.class)
 public class WebConfig extends Metaworks4WebConfig {
 
