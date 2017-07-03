@@ -1,10 +1,12 @@
 package com.moornmo.ltms;
 
-import com.moornmo.framework.TenantAwareFilter;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.metaworks.multitenancy.ClassManager;
 import org.metaworks.multitenancy.CouchbaseMetadataService;
 import org.metaworks.multitenancy.MetadataService;
+import org.metaworks.multitenancy.TenantAwareFilter;
+import org.metaworks.springboot.configuration.Metaworks4WebConfig;
+import org.metaworks.multitenancy.persistence.MultitenantRepositoryImpl;
 import org.metaworks.rest.MetaworksRestService;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.uengine.modeling.resource.CachedResourceManager;
 import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.modeling.resource.Storage;
@@ -27,11 +28,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackageClasses = {TenantAwareFilter.class, MetaworksRestService.class, ProductRepository.class, ClassManager.class, MetadataService.class})
 @EnableJpaRepositories(repositoryBaseClass = MultitenantRepositoryImpl.class)
-public class WebConfig extends WebMvcConfigurerAdapter {
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(new GsonHttpMessageConverter());
-//    }
+public class WebConfig extends Metaworks4WebConfig {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -41,11 +38,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("access_token", "Content-Type");
 
-//
-//        registry.addMapping("/**").allowedOrigins("*");
-//        registry.addMapping("/people").allowedOrigins("*");
-//        registry.addMapping("/**").allowedOrigins("http://localhost:8081");
-//        registry.addMapping("/people").allowedOrigins("http://localhost:8081");
     }
 
     @Bean
@@ -108,18 +100,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
 
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(final EntityManagerFactoryBuilder builder) {
-//        LocalContainerEntityManagerFactoryBean ret = null;
-//        try {
-//            ret = builder
-//                    .dataSource(dataSource())
-//                    .packages(Product.class.getPackage().getName())
-//                    .persistenceUnit("YourPersistenceUnitName")
-//                    .properties(initJpaProperties()).build();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        return ret;
-//    }
 }

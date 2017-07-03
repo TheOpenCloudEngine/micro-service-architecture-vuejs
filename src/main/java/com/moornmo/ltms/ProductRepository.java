@@ -1,5 +1,6 @@
 package com.moornmo.ltms;
 
+import org.metaworks.multitenancy.persistence.MultitenantRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

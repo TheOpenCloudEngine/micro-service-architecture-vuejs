@@ -3,12 +3,12 @@ package com.moornmo.ltms;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.moornmo.framework.AfterLoad;
-import com.moornmo.framework.BeforeSave;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.jvnet.hk2.annotations.Service;
 import org.metaworks.annotation.*;
+import org.metaworks.multitenancy.persistence.AfterLoad;
+import org.metaworks.multitenancy.persistence.BeforeSave;
 
 import javax.persistence.*;
 import javax.persistence.Id;

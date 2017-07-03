@@ -1,5 +1,6 @@
 package com.moornmo.ltms;
 
+import org.metaworks.springboot.configuration.Metaworks4BaseApplication;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Properties;
 
 @SpringBootApplication
-public class Application extends JpaBaseConfiguration {
+public class Application extends Metaworks4BaseApplication {
 
 	/**
 	 * @param dataSource
@@ -31,25 +32,6 @@ public class Application extends JpaBaseConfiguration {
 		super(dataSource, properties, jtaTransactionManagerProvider, transactionManagerCustomizers);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration#createJpaVendorAdapter()
-	 */
-	@Override
-	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
-		return new EclipseLinkJpaVendorAdapter();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration#getVendorProperties()
-	 */
-	@Override
-	protected Map<String, Object> getVendorProperties() {
-
-		// Turn off dynamic weaving to disable LTW lookup in static weaving mode
-		return Collections.singletonMap("eclipselink.weaving", "false");
-	}
 
 
 
