@@ -1,6 +1,5 @@
 package com.moornmo.ltms;
 
-import com.moornmo.framework.ReferencePicker;
 import org.metaworks.annotation.Face;
 
 import javax.persistence.*;
