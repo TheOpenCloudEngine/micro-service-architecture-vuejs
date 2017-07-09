@@ -13,6 +13,8 @@ npm install
 npm run dev
 ```
 
-### Go to http://localhost:8081/product.html, selfservice.html, or progress.html
+### Go to http://localhost:8081/loginhtml
+
+and id/pwd = jyjang@uengine.org/test or jyjang@opence.org/test for another tenant.
 
 Go to wiki for documentation:  https://github.com/TheOpenCloudEngine/micro-service-architecture-vuejs/wiki
