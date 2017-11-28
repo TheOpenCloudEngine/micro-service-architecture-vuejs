@@ -1,6 +1,8 @@
 package com.moornmo.ltms;
 
+import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.ServiceMethod;
 
 import javax.persistence.*;
 
@@ -37,6 +39,28 @@ public class Progress {
             this.progName = progName;
         }
 
+    @Available(when="progType=='runnable'")
+    @ServiceMethod()
+    public void start(){
+        System.out.println("Start the progress");
+        setProgType("running");
+    }
+
+
+    @Available(when="progType=='running'")
+    @ServiceMethod()
+    public void suspend(){
+        System.out.println("Start the progress");
+        setProgType("stopped");
+    }
+
+
+    @Available(when="progType=='stopped'")
+    @ServiceMethod()
+    public void resume(){
+        start();
+    }
+
 
     @JoinColumn(name = "prodId")
    // @OneToOne(cascade = CascadeType.ALL)
@@ -48,6 +72,5 @@ public class Progress {
         public void setProduct(Product product) {
             this.product = product;
         }
-
 
 }
