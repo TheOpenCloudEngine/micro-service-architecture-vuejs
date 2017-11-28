@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-### Go to http://localhost:8081/loginhtml
+### Go to http://localhost:8081/login.html
 
 and id/pwd = jyjang@uengine.org/test or jyjang@opence.org/test for another tenant.
 
