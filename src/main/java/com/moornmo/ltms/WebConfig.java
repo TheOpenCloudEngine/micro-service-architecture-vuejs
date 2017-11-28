@@ -6,6 +6,7 @@ import org.metaworks.multitenancy.CouchbaseMetadataService;
 import org.metaworks.multitenancy.DefaultMetadataService;
 import org.metaworks.multitenancy.MetadataService;
 import org.metaworks.multitenancy.tenantawarefilter.TenantAwareFilter;
+import org.metaworks.springboot.configuration.CorsFilter;
 import org.metaworks.springboot.configuration.Metaworks4WebConfig;
 import org.metaworks.multitenancy.persistence.MultitenantRepositoryImpl;
 import org.metaworks.rest.MetaworksRestService;
@@ -32,15 +33,25 @@ import java.util.Properties;
 @EnableJpaRepositories(repositoryBaseClass = MultitenantRepositoryImpl.class)
 public class WebConfig extends Metaworks4WebConfig {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:8081", "http://localhost:8082", "*")
+//                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("access_token", "Content-Type");
+//
+//    }
 
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8081", "http://localhost:8082", "*")
-                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("access_token", "Content-Type");
-
+    /**
+     * Uncomment if this needs a CORS setting by itself
+     * @return
+     */
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter();
     }
+
 
     @Bean
     public TenantAwareFilter tenantAwareFilter(){
